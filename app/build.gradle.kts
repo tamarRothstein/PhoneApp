@@ -48,6 +48,10 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+        implementation("com.squareup.okhttp3:okhttp:4.11.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+
     // Activity and Fragment
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
@@ -83,4 +87,4 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
+    }
