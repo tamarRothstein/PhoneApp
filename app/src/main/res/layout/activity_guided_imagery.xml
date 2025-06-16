@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_off_white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- כותרת וכפתור חזרה -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:text="←"
+                android:textSize="20sp"
+                android:backgroundTint="@color/primary_turquoise"
+                android:textColor="@color/text_white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Guided Imagery"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:gravity="center"
+                android:layout_marginEnd="48dp" />
+
+        </LinearLayout>
+
+        <!-- כותרת סצנה נוכחית -->
+        <TextView
+            android:id="@+id/currentSceneTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ocean"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_turquoise"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <!-- תיאור -->
+        <TextView
+            android:id="@+id/sceneDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose your peaceful scene:"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- כפתורי בחירת סצנה -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="32dp">
+
+            <Button
+                android:id="@+id/oceanButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Ocean"
+                android:textSize="14sp"
+                android:backgroundTint="@color/primary_turquoise"
+                android:textColor="@color/text_white"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/forestButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Forest"
+                android:textSize="14sp"
+                android:backgroundTint="@color/button_secondary"
+                android:textColor="@color/text_white"
+                android:layout_marginHorizontal="4dp" />
+
+            <Button
+                android:id="@+id/safeRoomButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Safe Room"
+                android:textSize="14sp"
+                android:backgroundTint="@color/button_secondary"
+                android:textColor="@color/text_white"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <!-- טקסט הדרכה -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/background_card">
+
+            <TextView
+                android:id="@+id/guidanceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Close your eyes and imagine you're sitting on a peaceful beach..."
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:lineSpacingExtra="4dp"
+                android:padding="20dp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- כפתורי בקרה -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/pauseButton"
+                android:layout_width="120dp"
+                android:layout_height="56dp"
+                android:text="Play"
+                android:textSize="16sp"
+                android:backgroundTint="@color/button_primary"
+                android:textColor="@color/text_white"
+                android:layout_marginEnd="16dp" />
+
+            <Button
+                android:id="@+id/finishButton"
+                android:layout_width="120dp"
+                android:layout_height="56dp"
+                android:text="Finish"
+                android:textSize="16sp"
+                android:backgroundTint="@color/button_secondary"
+                android:textColor="@color/text_white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

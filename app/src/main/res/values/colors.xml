@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="primary_turquoise">#4DD0E1</color>
+    <color name="primary_sage">#81C784</color>
+    <color name="primary_dark">#00796B</color>
+
+    <!-- Background Colors -->
+    <color name="background_off_white">#FAFAFA</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="background_overlay">#80000000</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#263238</color>
+    <color name="text_secondary">#546E7A</color>
+    <color name="text_hint">#90A4AE</color>
+    <color name="text_white">#FFFFFF</color>
+
+    <!-- Status Colors -->
+    <color name="status_calm">#81C784</color>
+    <color name="status_alert">#FFB74D</color>
+    <color name="status_emergency">#E57373</color>
+
+    <!-- Button Colors -->
+    <color name="button_primary">#4DD0E1</color>
+    <color name="button_secondary">#81C784</color>
+    <color name="button_emergency">#F44336</color>
+    <color name="button_disabled">#BDBDBD</color>
+
+    <!-- System Colors -->
+    <color name="ripple_effect">#1A4DD0E1</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="shadow">#1A000000</color>
+
+    <!-- Legacy Material Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
