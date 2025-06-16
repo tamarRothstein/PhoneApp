@@ -2,19 +2,23 @@ package com.example.myphoneapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.myphoneapp.databinding.ActivityMainBinding
 import com.example.myphoneapp.ui.main.MainViewModel
 import com.example.myphoneapp.ui.alert.AlertActivity
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private var tts: TextToSpeech? = null
+    private lateinit var currentLocale: Locale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         setupNavigation()
         observeViewModel()
+        setupTTS()
 
         // Start monitoring health data
         viewModel.startHealthMonitoring("user_123") // Replace with actual user ID
@@ -36,17 +41,42 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
+    private fun setupTTS() {
+        currentLocale = when (Locale.getDefault().language) {
+            "he" -> Locale("he", "IL")
+            "ru" -> Locale("ru", "RU")
+            else -> Locale.US
+        }
+
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result = tts?.setLanguage(currentLocale)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(this, "שפה לא נתמכת במכשיר", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun speakCalmingMessage() {
+        val message = when (currentLocale.language) {
+            "he" -> "היי, הכל בסדר. תנשמי עמוק. את לא לבד."
+            "ru" -> "Привет, всё хорошо. Ты не одна. Дыши глубоко."
+            else -> "Hey, everything is okay. You're not alone. Breathe deeply."
+        }
+        tts?.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
     private fun observeViewModel() {
         viewModel.serverResponse.observe(this) { response ->
             if (response.shouldAlert) {
                 when (response.emotionalState.state) {
                     "emergency" -> {
-                        // Launch emergency activity immediately
-                        // For now, we'll show the alert with emergency message
+                        speakCalmingMessage() // הפעלת הדיבור במצב חירום
                         launchAlertActivity(response.alertMessage ?: "Emergency situation detected!")
                     }
                     "alert", "stressed" -> {
-                        // Show relaxation options via AlertActivity
+                        speakCalmingMessage() // גם כאן אפשר להרגיע
                         response.alertMessage?.let { message ->
                             launchAlertActivity(message)
                         }
@@ -56,8 +86,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.error.observe(this) { errorMessage ->
-            // Handle error - could show a snackbar or toast
-            // For now, we'll use mock data when server is unavailable
+            // Handle error
         }
     }
 
@@ -65,5 +94,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, AlertActivity::class.java)
         intent.putExtra("ALERT_MESSAGE", message)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        tts?.stop()
+        tts?.shutdown()
+        super.onDestroy()
     }
 }
