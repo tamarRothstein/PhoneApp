@@ -20,11 +20,14 @@
 
     <!-- Header -->
     <TextView
-        style="@style/HeaderTextStyle"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Shake It Out"
         android:textAlignment="center"
+        style="@style/HeaderTextStyle"
+
         android:layout_marginBottom="16dp" />
 
     <!-- Content -->

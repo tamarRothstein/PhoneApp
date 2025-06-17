@@ -16,21 +16,23 @@
         android:layout_marginBottom="24dp" />
 
     <!-- App Name -->
+
+    <!-- Tagline -->
+
     <TextView
         style="@style/HeaderTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Emotional Wellness"
-        android:textColor="@color/text_white"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:text="NOME"
+        android:textColor="@color/text_white" />
 
-    <!-- Tagline -->
     <TextView
         style="@style/BodyTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.8"
         android:text="Your Personal Wellness Companion"
-        android:textColor="@color/text_white"
-        android:alpha="0.8" />
+        android:textColor="@color/text_white" />
 
 </LinearLayout>

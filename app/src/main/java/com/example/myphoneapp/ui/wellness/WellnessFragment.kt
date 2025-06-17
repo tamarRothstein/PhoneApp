@@ -1,4 +1,4 @@
-package com.example.myphoneapp.ui.wellness
+package com.example.myphoneapp.ui.alert
 
 import android.content.Intent
 import android.os.Bundle
@@ -29,6 +29,10 @@ class WellnessFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
         binding.btnVoiceGuidance.setOnClickListener {
             startActivity(Intent(requireContext(), VoiceGuidanceActivity::class.java))
         }
@@ -42,7 +46,7 @@ class WellnessFragment : Fragment() {
         }
 
         binding.btnMeditation.setOnClickListener {
-            startActivity(Intent(requireContext(), GuidedImageryActivity::class.java))
+            startActivity(Intent(requireContext(), MeditationActivity::class.java))
         }
 
         binding.btnCalmingSounds.setOnClickListener {
@@ -59,11 +63,6 @@ class WellnessFragment : Fragment() {
 
         binding.btnHydration.setOnClickListener {
             startActivity(Intent(requireContext(), HydrationActivity::class.java))
-        }
-
-        binding.btnBack.setOnClickListener {
-            // חזרה לדף הראשי או סגירת הפרגמנט
-            requireActivity().onBackPressed()
         }
     }
 

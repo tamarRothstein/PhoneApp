@@ -15,7 +15,7 @@
 
         <!-- Back Button -->
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/btnBack"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
@@ -54,7 +54,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_voice_guidance"
+                android:id="@+id/btnVoiceGuidance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="Let me guide you through this moment"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -92,7 +92,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_breathing"
+                android:id="@+id/btnBreathing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:text="Guided breathing exercise (2 minutes)"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -130,7 +130,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_shake_out"
+                android:id="@+id/btnShakeOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:text="Release tension by shaking your body (1 minute)"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -168,7 +168,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_meditation"
+                android:id="@+id/btnMeditation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text="Peaceful visualization journey (5-10 minutes)"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -206,7 +206,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_calming_sounds"
+                android:id="@+id/btnCalmingSounds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nature sounds and peaceful audio"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -244,7 +244,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_heartbeat"
+                android:id="@+id/btnHeartbeat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -266,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:text="Connect with your natural rhythm"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -282,7 +282,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_counting"
+                android:id="@+id/btnCounting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -304,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:text="Simple counting exercise to center yourself"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>
@@ -320,7 +320,7 @@
             app:cardBackgroundColor="@color/background_card">
 
             <LinearLayout
-                android:id="@+id/btn_hydration"
+                android:id="@+id/btnHydration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -342,7 +342,7 @@
                     android:layout_height="wrap_content"
                     android:text="Take a moment to hydrate mindfully"
                     android:textSize="14sp"
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_secondary"
                     android:textAlignment="center" />
 
             </LinearLayout>

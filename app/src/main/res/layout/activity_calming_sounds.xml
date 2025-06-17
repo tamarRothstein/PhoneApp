@@ -4,261 +4,339 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_off_white"
-    android:padding="16dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingBottom="40dp">
 
-        <!-- כותרת וכפתור חזרה -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="24dp">
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            app:tint="@color/text_primary" />
 
-            <Button
-                android:id="@+id/backButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="←"
-                android:textSize="20sp"
-                android:background="@drawable/ic_arrow_back"
-                android:backgroundTint="@color/primary_turquoise"
-                android:textColor="@color/text_white" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="צלילים מרגיעים"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:gravity="center"
-                android:layout_marginEnd="48dp" />
-
-        </LinearLayout>
-
-        <!-- נגן הצלילים הראשי -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/background_card">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/currentSoundTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="קולות יער"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/currentSoundDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="רחש עלים, ציוץ ציפורים וקולות הטבע"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:gravity="center"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- כפתורי בקרה -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginBottom="12dp">
-
-                    <Button
-                        android:id="@+id/previousSoundButton"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:text="⏮️"
-                        android:textSize="16sp"
-                        android:backgroundTint="@color/button_secondary"
-                        android:textColor="@color/text_white"
-                        android:layout_marginEnd="12dp" />
-
-                    <Button
-                        android:id="@+id/playPauseButton"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:text="▶️"
-                        android:textSize="20sp"
-                        android:backgroundTint="@color/button_primary"
-                        android:textColor="@color/text_white"
-                        android:layout_marginHorizontal="12dp" />
-
-                    <Button
-                        android:id="@+id/nextSoundButton"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:text="⏭️"
-                        android:textSize="16sp"
-                        android:backgroundTint="@color/button_secondary"
-                        android:textColor="@color/text_white"
-                        android:layout_marginStart="12dp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/statusText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="לחץ להשמעה"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:gravity="center" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- בחירה מהירה של צלילים -->
+        <!-- Header -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="בחר צליל:"
-            android:textSize="18sp"
+            android:text="Calming Sounds"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
-            android:layout_marginBottom="16dp" />
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp" />
 
-        <!-- שורה ראשונה של כפתורים -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose peaceful sounds to help you relax"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:textAlignment="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Current Playing Status -->
+        <TextView
+            android:id="@+id/txtCurrentSound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No sound playing"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:textAlignment="center"
+            android:layout_marginBottom="20dp"
+            android:padding="12dp"
+            android:background="@color/background_card" />
+
+        <!-- Row 1 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="12dp">
 
-            <Button
-                android:id="@+id/forestSoundsButton"
+            <!-- Ocean Waves Option -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="🌲\nיער"
-                android:textSize="14sp"
-                android:backgroundTint="@color/primary_sage"
-                android:textColor="@color/text_white"
-                android:layout_marginEnd="6dp" />
+                android:layout_marginEnd="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
 
-            <Button
-                android:id="@+id/oceanSoundsButton"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:text="🌊\nים"
-                android:textSize="14sp"
-                android:backgroundTint="@color/primary_turquoise"
-                android:textColor="@color/text_white"
-                android:layout_marginHorizontal="6dp" />
+                <LinearLayout
+                    android:id="@+id/btnOceanWaves"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
 
-            <Button
-                android:id="@+id/rainSoundsButton"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ocean Waves"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/button_primary"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gentle waves washing on the shore"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Rain Forest Option -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="🌧️\nגשם"
-                android:textSize="14sp"
-                android:backgroundTint="@color/text_hint"
-                android:textColor="@color/text_white"
-                android:layout_marginStart="6dp" />
+                android:layout_marginHorizontal="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
+
+                <LinearLayout
+                    android:id="@+id/btnRainForest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rain Forest"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_sage"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tropical forest sounds with distant rain"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Birds Singing Option -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
+
+                <LinearLayout
+                    android:id="@+id/btnBirdsSinging"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Birds Singing"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/status_calm"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Peaceful morning birds chirping"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <!-- שורה שנייה של כפתורים -->
+        <!-- Row 2 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="24dp">
 
-            <Button
-                android:id="@+id/breathingMusicButton"
+            <!-- Gentle Rain Option -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="🎵\nנשימה"
-                android:textSize="14sp"
-                android:backgroundTint="@color/purple_200"
-                android:textColor="@color/text_white"
-                android:layout_marginEnd="6dp" />
+                android:layout_marginEnd="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
 
-            <Button
-                android:id="@+id/gongSoundsButton"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:text="🔔\nגונג"
-                android:textSize="14sp"
-                android:backgroundTint="@color/status_alert"
-                android:textColor="@color/text_white"
-                android:layout_marginHorizontal="6dp" />
+                <LinearLayout
+                    android:id="@+id/btnGentleRain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
 
-            <Button
-                android:id="@+id/whiteNoiseButton"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gentle Rain"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_turquoise"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Soft raindrops on leaves and ground"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Mountain Stream Option -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="📻\nרעש לבן"
-                android:textSize="14sp"
-                android:backgroundTint="@color/button_disabled"
-                android:textColor="@color/text_primary"
-                android:layout_marginStart="6dp" />
+                android:layout_marginHorizontal="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
+
+                <LinearLayout
+                    android:id="@+id/btnMountainStream"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mountain Stream"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/status_alert"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Clear water flowing over rocks"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Wind in Trees Option -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/background_card">
+
+                <LinearLayout
+                    android:id="@+id/btnWindTrees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wind in Trees"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_dark"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gentle breeze rustling through leaves"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <!-- טיפים -->
-        <androidx.cardview.widget.CardView
+        <!-- Control Buttons -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/background_card">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:text="Start"
+                android:textSize="16sp"
+                android:backgroundTint="@color/primary_dark"
+                android:textColor="@color/text_white"
+                android:layout_marginEnd="16dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="💡 טיפים להאזנה:"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="8dp" />
+            <Button
+                android:id="@+id/doneButton"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:text="Done"
+                android:textSize="16sp"
+                android:backgroundTint="@color/primary_dark"
+                android:textColor="@color/text_white" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="• השתמש באוזניות לחוויה טובה יותר\n• התאם את עוצמת הקול לנח לך\n• נשום עמוק תוך כדי האזנה\n• תן לעצמך לשקוע בצלילים"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:lineSpacingExtra="4dp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

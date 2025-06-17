@@ -94,7 +94,7 @@ class GuidedImageryActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun setupClickListeners() {
         // כפתור חזרה
-        binding.backButton.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 

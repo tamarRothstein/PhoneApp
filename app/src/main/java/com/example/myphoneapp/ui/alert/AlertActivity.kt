@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myphoneapp.databinding.ActivityAlertBinding
+import com.example.myphoneapp.ui.alert.WellnessOptionsActivity
 
 class AlertActivity : AppCompatActivity() {
 

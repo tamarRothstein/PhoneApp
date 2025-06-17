@@ -2,6 +2,7 @@ package com.example.myphoneapp.ui.alert
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myphoneapp.databinding.ActivityWellnessOptionsBinding
 import com.example.myphoneapp.ui.activities.*
@@ -31,13 +32,12 @@ class WellnessOptionsActivity : AppCompatActivity() {
             startActivity(Intent(this, BreathingActivity::class.java))
         }
 
-        // האפשרויות החדשות
         binding.btnShakeOut.setOnClickListener {
             startActivity(Intent(this, ShakeOutActivity::class.java))
         }
 
         binding.btnMeditation.setOnClickListener {
-            startActivity(Intent(this, GuidedImageryActivity::class.java))
+            startActivity(Intent(this, MeditationActivity::class.java))
         }
 
         binding.btnCalmingSounds.setOnClickListener {
@@ -48,7 +48,6 @@ class WellnessOptionsActivity : AppCompatActivity() {
             startActivity(Intent(this, HeartbeatActivity::class.java))
         }
 
-        // האפשרויות הקיימות
         binding.btnCounting.setOnClickListener {
             startActivity(Intent(this, CountingActivity::class.java))
         }

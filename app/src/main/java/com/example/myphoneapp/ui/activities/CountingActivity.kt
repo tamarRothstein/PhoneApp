@@ -34,7 +34,7 @@ class CountingActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        binding.backButton.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 

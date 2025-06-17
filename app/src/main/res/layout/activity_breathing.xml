@@ -14,14 +14,15 @@
         android:gravity="center_vertical"
         android:layout_marginBottom="20dp">
 
-        <Button
-            android:id="@+id/backButton"
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btn_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:text="←"
-            android:textSize="20sp"
-            android:backgroundTint="@color/primary_turquoise"
-            android:textColor="@color/text_white" />
+            android:layout_marginBottom="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back" />
 
         <TextView
             android:layout_width="0dp"
@@ -87,15 +88,6 @@
             android:gravity="center"
             android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:id="@+id/descriptionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4-4-4-4 breathing technique"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:gravity="center" />
-
     </LinearLayout>
 
     <!-- כפתורי בקרה -->
@@ -109,7 +101,7 @@
             android:id="@+id/startButton"
             android:layout_width="160dp"
             android:layout_height="60dp"
-            android:text="Begin Breathing"
+            android:text="Start Breathing"
             android:textSize="16sp"
             android:backgroundTint="@color/button_primary"
             android:textColor="@color/text_white"

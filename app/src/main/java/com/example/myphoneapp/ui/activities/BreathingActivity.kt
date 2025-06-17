@@ -42,13 +42,13 @@ class BreathingActivity : AppCompatActivity() {
 
     private fun setupInitialState() {
         binding.instructionText.text = "Ready to Start"
-        binding.descriptionText.text = "4-4-4-4 breathing technique"
+        binding.phaseText.text = "4-4-4-4 breathing technique"
         binding.cycleCounter.text = "Cycle: 0 / $maxCycles"
-        binding.startButton.text = "Begin Breathing"
+        binding.startButton.text = "Start Breathing"
     }
 
     private fun setupClickListeners() {
-        binding.backButton.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 
@@ -71,7 +71,7 @@ class BreathingActivity : AppCompatActivity() {
         isBreathing = true
         cycleCount = 0
         binding.startButton.text = "Stop Exercise"
-        binding.descriptionText.text = "Follow the circle and breathe slowly"
+        binding.phaseText.text = "Follow the circle and breathe slowly"
 
         breatheIn()
     }
@@ -80,8 +80,8 @@ class BreathingActivity : AppCompatActivity() {
         breathingAnimator?.cancel()
         isBreathing = false
         binding.instructionText.text = "Exercise Stopped"
-        binding.descriptionText.text = "4-4-4-4 breathing technique"
-        binding.startButton.text = "Begin Breathing"
+        binding.phaseText.text = "4-4-4-4 breathing technique"
+        binding.startButton.text = "Start Breathing"
 
         // החזרת העיגול לגודל רגיל
         breathingCircle?.animate()
@@ -176,27 +176,6 @@ class BreathingActivity : AppCompatActivity() {
             ?.alpha(0.8f)
             ?.setDuration(1000)
             ?.start()
-
-        // הצגת דיאלוג סיום
-        showCompletionDialog()
-    }
-
-    private fun showCompletionDialog() {
-        val dialog = android.app.AlertDialog.Builder(this)
-            .setTitle("Breathing Exercise Complete")
-            .setMessage("Excellent work! You've completed 6 breathing cycles using the 4-4-4-4 technique. This practice helps reduce stress, lower anxiety, and improve focus.")
-            .setPositiveButton("Continue") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setNegativeButton("Start Again") { dialog, _ ->
-                dialog.dismiss()
-                cycleCount = 0
-                binding.cycleCounter.text = "Cycle: 0 / $maxCycles"
-                setupInitialState()
-            }
-            .create()
-
-        dialog.show()
     }
 
     override fun onDestroy() {
