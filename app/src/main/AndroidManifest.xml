@@ -2,16 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- הרשאות -->
+    <!-- הרשאות כלליות -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- הרשאות לText-to-Speech -->
+    <!-- הרשאות ל-TTS -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <!-- הרשאות לחירום -->
+    <!-- הרשאות חירום -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -19,7 +20,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,7 +30,16 @@
         android:theme="@style/Theme.MyPhoneApp"
         tools:targetApi="31">
 
-        <!-- Activity ראשי -->
+        <!-- Firebase Messaging Service -->
+        <service
+            android:name=".notifications.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Main Launcher -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -52,57 +61,21 @@
             android:name=".ui.alert.AlertActivity"
             android:exported="false"
             android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
         <activity
             android:name=".ui.alert.WellnessOptionsActivity"
             android:exported="false"
             android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
 
         <!-- Wellness Activities -->
-        <activity
-            android:name=".ui.activities.BreathingActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.MeditationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.CountingActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.GuidedImageryActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.HeartbeatActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.HydrationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.CalmingSoundsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.ShakeOutActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <activity
-            android:name=".ui.activities.VoiceGuidanceActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.BreathingActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.MeditationActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.CountingActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.GuidedImageryActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.HeartbeatActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.HydrationActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.CalmingSoundsActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.ShakeOutActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+        <activity android:name=".ui.activities.VoiceGuidanceActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
 
     </application>
 

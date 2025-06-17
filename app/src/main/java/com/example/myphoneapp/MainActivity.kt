@@ -3,6 +3,7 @@ package com.example.myphoneapp
 import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.myphoneapp.databinding.ActivityMainBinding
 import com.example.myphoneapp.ui.main.MainViewModel
 import com.example.myphoneapp.ui.alert.AlertActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +30,16 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         observeViewModel()
         setupTTS()
+
+        // ✅ בקשה יזומה לקבלת FCM Token
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            Log.d("FCM", "FCM Token: $token")
+        }
 
         // Start monitoring health data
         viewModel.startHealthMonitoring("user_123") // Replace with actual user ID
@@ -72,11 +84,11 @@ class MainActivity : AppCompatActivity() {
             if (response.shouldAlert) {
                 when (response.emotionalState.state) {
                     "emergency" -> {
-                        speakCalmingMessage() // הפעלת הדיבור במצב חירום
+                        speakCalmingMessage()
                         launchAlertActivity(response.alertMessage ?: "Emergency situation detected!")
                     }
                     "alert", "stressed" -> {
-                        speakCalmingMessage() // גם כאן אפשר להרגיע
+                        speakCalmingMessage()
                         response.alertMessage?.let { message ->
                             launchAlertActivity(message)
                         }
