@@ -5,34 +5,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/splash_background">
+    android:background="@drawable/splash_background"
+    android:padding="32dp">
 
-    <!-- App Logo Placeholder -->
+    <!-- App Logo -->
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_app_logo"
+        android:id="@+id/logoImageView"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@drawable/logo_nome"
         android:contentDescription="App Logo"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="40dp" />
 
     <!-- App Name -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOME"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_white"
+        android:letterSpacing="0.08"
+        android:layout_marginBottom="16dp" />
 
     <!-- Tagline -->
-
     <TextView
-        style="@style/HeaderTextStyle"
+        android:id="@+id/appTagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="NOME"
-        android:textColor="@color/text_white" />
-
-    <TextView
-        style="@style/BodyTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.8"
         android:text="Your Personal Wellness Companion"
-        android:textColor="@color/text_white" />
+        android:textSize="18sp"
+        android:textColor="@color/text_white"
+        android:alpha="0.8"
+        android:letterSpacing="0.03"
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

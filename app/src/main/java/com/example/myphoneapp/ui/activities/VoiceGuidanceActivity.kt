@@ -1,6 +1,8 @@
 package com.example.myphoneapp.ui.activities
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognitionListener
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.myphoneapp.R
 import com.example.myphoneapp.databinding.ActivityVoiceGuidanceBinding
 import kotlinx.coroutines.*
 import okhttp3.*
@@ -22,14 +25,11 @@ import java.util.*
 class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var binding: ActivityVoiceGuidanceBinding
-
     private var tts: TextToSpeech? = null
     private lateinit var speechRecognizer: SpeechRecognizer
-    private lateinit var speechIntent: android.content.Intent
+    private lateinit var speechIntent: Intent
+    private lateinit var OPENAI_API_KEY: String
 
-    private val OPENAI_API_KEY = " "
-
-    // בקשת הרשאת מיקרופון דינמית
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -44,29 +44,21 @@ class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityVoiceGuidanceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // אתחול TTS
-        tts = TextToSpeech(this, this)
+        OPENAI_API_KEY = getSecretValue(this, "OPENAI_API_KEY")
 
-        // אתחול SpeechRecognizer
+        tts = TextToSpeech(this, this)
         setupSpeechRecognizer()
 
-        // UI ראשוני
         binding.voiceText.text = "Press 'Start' and speak when ready."
 
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
+        binding.btnBack.setOnClickListener { finish() }
 
         binding.btnContinue.text = "Start"
         binding.btnPause.text = "Finish"
 
-        binding.btnContinue.setOnClickListener {
-            checkMicrophonePermissionAndListen()
-        }
+        binding.btnContinue.setOnClickListener { checkMicrophonePermissionAndListen() }
 
-        binding.btnPause.setOnClickListener {
-            pauseGuidance()
-        }
+        binding.btnPause.setOnClickListener { pauseGuidance() }
     }
 
     private fun setupSpeechRecognizer() {
@@ -86,10 +78,20 @@ class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 val spokenText = matches?.getOrNull(0) ?: ""
                 binding.voiceText.text = "You said:\n$spokenText"
 
-                // שולח ל-OpenAI לקבלת תגובה רגועה ותומכת
                 getAIResponse(spokenText) { aiResponse ->
                     binding.voiceText.text = aiResponse
                     tts?.speak(aiResponse, TextToSpeech.QUEUE_FLUSH, null, "AIResponse")
+
+                    // Example "agent" action: switch screen if AI suggests breathing
+                    val lower = aiResponse.lowercase()
+                    when {
+                        "breathe" in lower || "נשום" in lower -> {
+                            startActivity(Intent(this@VoiceGuidanceActivity, BreathingActivity::class.java))
+                        }
+                        "music" in lower || "מוזיקה" in lower -> {
+                            startActivity(Intent(this@VoiceGuidanceActivity, CalmingSoundsActivity::class.java))
+                        }
+                    }
                 }
             }
 
@@ -97,7 +99,7 @@ class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             override fun onEvent(eventType: Int, params: Bundle?) {}
         })
 
-        speechIntent = android.content.Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+        speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault().toString())
         }
@@ -128,8 +130,6 @@ class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         speechRecognizer.stopListening()
         Toast.makeText(this, "Stopped", Toast.LENGTH_SHORT).show()
     }
-
-    // --- קריאה ל-OpenAI API ---
 
     private fun getAIResponse(userInput: String, onResult: (String) -> Unit) {
         val client = OkHttpClient()
@@ -180,6 +180,13 @@ class VoiceGuidanceActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }
             }
         }
+    }
+
+    private fun getSecretValue(context: Context, key: String): String {
+        val inputStream = context.resources.openRawResource(R.raw.secret)
+        val properties = Properties()
+        properties.load(inputStream)
+        return properties.getProperty(key) ?: ""
     }
 
     override fun onInit(status: Int) {

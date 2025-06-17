@@ -8,13 +8,13 @@
     android:padding="24dp"
     android:gravity="center">
 
-    <!-- Alert Icon -->
+    <!-- App Logo -->
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_wellness"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/logo_nome"
         android:layout_marginBottom="24dp"
-        app:tint="@color/primary_turquoise" />
+        android:contentDescription="App Logo" />
 
     <!-- Alert Message -->
     <TextView

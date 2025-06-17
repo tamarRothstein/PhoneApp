@@ -220,6 +220,14 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- Footer Logo -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo_nome"
+            android:contentDescription="App Logo" />
 
+    </LinearLayout>
 </ScrollView>
