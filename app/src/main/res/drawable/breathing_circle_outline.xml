@@ -2,12 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
 
-    <gradient
-        android:startColor="@color/primary_turquoise"
-        android:endColor="@color/primary_sage"
-        android:angle="45"
-        android:type="linear" />
+    <!-- צבע פנים שקוף -->
+    <solid android:color="@android:color/transparent" />
 
+    <!-- מסגרת -->
     <stroke
         android:width="3dp"
         android:color="@color/primary_dark" />

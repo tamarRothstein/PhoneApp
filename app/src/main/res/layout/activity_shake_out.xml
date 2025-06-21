@@ -106,7 +106,7 @@
             style="@style/PrimaryButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Shaking"
+            android:text="Start"
             android:paddingStart="32dp"
             android:paddingEnd="32dp"
             android:layout_marginEnd="16dp" />
@@ -116,7 +116,7 @@
             style="@style/SecondaryButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish"
+            android:text="Done"
             android:paddingStart="32dp"
             android:paddingEnd="32dp" />
 

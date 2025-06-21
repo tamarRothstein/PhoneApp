@@ -1,4 +1,4 @@
-package com.example.myphoneapp.ui.alert
+package com.example.myphoneapp.ui.wellness
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.myphoneapp.databinding.FragmentWellnessBinding
-import com.example.myphoneapp.ui.activities.*
+import com.example.myphoneapp.ui.activities.BreathingActivity
+import com.example.myphoneapp.ui.activities.CalmingSoundsActivity
+import com.example.myphoneapp.ui.activities.ShakeOutActivity
+import com.example.myphoneapp.ui.activities.VoiceGuidanceActivity
 
 class WellnessFragment : Fragment() {
 
@@ -25,13 +28,6 @@ class WellnessFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-    }
-
-    private fun setupClickListeners() {
-        binding.btnBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
 
         binding.btnVoiceGuidance.setOnClickListener {
             startActivity(Intent(requireContext(), VoiceGuidanceActivity::class.java))
@@ -45,25 +41,30 @@ class WellnessFragment : Fragment() {
             startActivity(Intent(requireContext(), ShakeOutActivity::class.java))
         }
 
-        binding.btnMeditation.setOnClickListener {
-            startActivity(Intent(requireContext(), MeditationActivity::class.java))
-        }
-
         binding.btnCalmingSounds.setOnClickListener {
             startActivity(Intent(requireContext(), CalmingSoundsActivity::class.java))
         }
 
+        // ❗ השורות הבאות הועברו להערה כי ה־IDs שלהן ב־XML נמצאות בהערת <!-- ... -->
+        // לכן אם תשאירי אותן בקוד, הן גורמות לשגיאת קומפילציה.
+
+        /*
+        binding.btnMeditation.setOnClickListener {
+            // פעולה עבור Guided Imagery
+        }
+
         binding.btnHeartbeat.setOnClickListener {
-            startActivity(Intent(requireContext(), HeartbeatActivity::class.java))
+            // פעולה עבור Listen to Your Heartbeat
         }
 
         binding.btnCounting.setOnClickListener {
-            startActivity(Intent(requireContext(), CountingActivity::class.java))
+            // פעולה עבור Count to 10
         }
 
         binding.btnHydration.setOnClickListener {
-            startActivity(Intent(requireContext(), HydrationActivity::class.java))
+            // פעולה עבור Drink Water
         }
+        */
     }
 
     override fun onDestroyView() {

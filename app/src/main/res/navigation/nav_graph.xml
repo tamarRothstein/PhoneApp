@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/wellnessFragment"
-        android:name="com.example.myphoneapp.ui.alert.WellnessFragment"
+        android:name="com.example.myphoneapp.ui.wellness.WellnessFragment"
         android:label="Wellness" />
 
     <fragment

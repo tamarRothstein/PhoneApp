@@ -200,34 +200,29 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
+            <!-- Voice Guidance Button -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_start_voice_guidance"
                 style="@style/PrimaryButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Start Breathing"
+                android:text="Start Voice Guidance"
                 android:drawableTop="@drawable/ic_breathing" />
 
+            <!-- Breathing Exercise Button -->
             <com.google.android.material.button.MaterialButton
-                style="@style/SecondaryButtonStyle"
+                android:id="@+id/btn_start_breathing"
+                style="@style/PrimaryButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Emergency"
-                android:drawableTop="@drawable/ic_emergency_filled" />
+                android:text="Start Breathing\n"
+                android:drawableTop="@drawable/ic_breathing" />
 
         </LinearLayout>
-
-        <!-- Footer Logo -->
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="32dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_nome"
-            android:contentDescription="App Logo" />
 
     </LinearLayout>
 </ScrollView>

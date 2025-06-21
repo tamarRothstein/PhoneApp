@@ -14,6 +14,7 @@ import com.example.myphoneapp.ui.main.MainViewModel
 import com.example.myphoneapp.ui.alert.AlertActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +25,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ✅ בדיקה בטוחה של ALERT_MESSAGE עם לוג
+        val extras = intent.extras
+        val alertMessage = extras?.getString("ALERT_MESSAGE")
+        val hasAlert = extras?.containsKey("ALERT_MESSAGE") == true
+
+        Log.d("CHECK_INTENT", "ALERT_MESSAGE = $alertMessage | hasAlert=$hasAlert")
+
+        if (hasAlert && !alertMessage.isNullOrBlank() && alertMessage != "null") {
+            launchAlertActivity(alertMessage)
+            finish()
+            return
+        }
+
+        // המשך רגיל לדשבורד
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
         setupTTS()
 
-        // ✅ בקשה יזומה לקבלת FCM Token
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM", "Fetching FCM registration token failed", task.exception)
@@ -41,8 +56,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("FCM", "FCM Token: $token")
         }
 
-        // Start monitoring health data
-        viewModel.startHealthMonitoring("user_123") // Replace with actual user ID
+        viewModel.startHealthMonitoring("user_123")
+
+        val target = intent.getStringExtra("navigate_to")
+        if (target == "wellness") {
+            val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            bottomNavigation.selectedItemId = R.id.wellnessFragment
+        }
+
     }
 
     private fun setupNavigation() {
@@ -83,22 +104,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.serverResponse.observe(this) { response ->
             if (response.shouldAlert) {
                 when (response.emotionalState.state) {
-                    "emergency" -> {
+                    "emergency", "alert", "stressed" -> {
                         speakCalmingMessage()
-                        launchAlertActivity(response.alertMessage ?: "Emergency situation detected!")
-                    }
-                    "alert", "stressed" -> {
-                        speakCalmingMessage()
-                        response.alertMessage?.let { message ->
-                            launchAlertActivity(message)
-                        }
+                        val msg = response.alertMessage ?: "Take a deep breath!"
+                        launchAlertActivity(msg)
                     }
                 }
             }
         }
 
         viewModel.error.observe(this) { errorMessage ->
-            // Handle error
+            // Handle error if needed
         }
     }
 

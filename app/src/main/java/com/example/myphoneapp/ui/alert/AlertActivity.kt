@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myphoneapp.databinding.ActivityAlertBinding
-import com.example.myphoneapp.ui.alert.WellnessOptionsActivity
+import com.example.myphoneapp.MainActivity
 
 class AlertActivity : AppCompatActivity() {
 
@@ -17,8 +17,8 @@ class AlertActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Get alert message from intent
-        val alertMessage = intent.getStringExtra("ALERT_MESSAGE") ?:
-        "Hey, what's up? Would you like to try some relaxation together?"
+        val alertMessage = intent.getStringExtra("ALERT_MESSAGE")
+            ?: "Hey, what's up? Would you like to try some relaxation together?"
 
         setupUI(alertMessage)
         setupClickListeners()
@@ -33,8 +33,11 @@ class AlertActivity : AppCompatActivity() {
             if (isThankYouState) {
                 finish()
             } else {
-                // Navigate to wellness options activity
-                startActivity(Intent(this, WellnessOptionsActivity::class.java))
+                // Navigate to MainActivity and request wellness tab
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("navigate_to", "wellness")
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
                 finish()
             }
         }
@@ -43,7 +46,6 @@ class AlertActivity : AppCompatActivity() {
             if (isThankYouState) {
                 finish()
             } else {
-                // Show thank you message and update state
                 showThankYouMessage()
             }
         }
@@ -57,7 +59,6 @@ class AlertActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // Allow back button to close the activity
         super.onBackPressed()
     }
 }

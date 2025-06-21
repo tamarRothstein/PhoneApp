@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Phone App</string>
+    <string name="heart_rate_default">72</string>
+    <string name="stress_level_low">Low</string>
+    <string name="steps_default">8,234</string>
+    <string name="status_great_today">You\'re doing great today!</string>
 </resources>

@@ -10,7 +10,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.myphoneapp.R
-import com.example.myphoneapp.ui.alert.AlertActivity
+import com.example.myphoneapp.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -19,64 +19,55 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.d("FCM", "Message received: ${remoteMessage.data}")
+        val data = remoteMessage.data
 
-        val alertType = remoteMessage.data["alert_type"] ?: ""
-        val alertMessage = remoteMessage.data["alert_message"] ?: "No message"
+        val heartRate = data["heart_rate"]?.toIntOrNull()
+        val hrv = data["hrv"]?.toDoubleOrNull()
+        val stressLevel = data["stress_level"]
+        val rageScore = data["rage_score"]?.toDoubleOrNull()
+        val timestamp = data["timestamp"]?.toLongOrNull()
+        val deviceId = data["device_id"]
 
-        Log.d("FCM", "Received alert_type: $alertType")
+        Log.d("FCM", "Message received: $data")
 
-        when (alertType) {
-            "emergency", "alert", "stressed" -> {
-                showNotification(alertMessage)
-                launchAlertActivity(alertMessage)
-            }
-            else -> {
-                Log.d("FCM", "No matching handler for alert_type: $alertType")
-            }
+        if (heartRate != null && heartRate > 120) {
+            val alertMessage = "High heart rate detected: $heartRate bpm"
+            showNotification(alertMessage)
         }
-    }
-
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        Log.d("FCM", "New token: $token")
-    }
-
-    private fun launchAlertActivity(message: String) {
-        val intent = Intent(this, AlertActivity::class.java).apply {
-            putExtra("ALERT_MESSAGE", message)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
     }
 
     private fun showNotification(message: String) {
-        val channelId = "default_channel"
+        val channelId = "alert_channel"
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("navigate_to_dashboard", true)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Default Channel",
+                "Alerts",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Channel for alert notifications"
+                description = "Notifications for abnormal readings"
                 enableLights(true)
                 lightColor = Color.RED
             }
             notificationManager.createNotificationChannel(channel)
         }
 
-        val intent = Intent(this, AlertActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("ALERT_MESSAGE", message)
-        }
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // use default icon to avoid missing reference
-            .setContentTitle("Emotional Alert")
+            .setSmallIcon(R.drawable.ic_dashboard)
+            .setContentTitle("Wellness Alert")
             .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()

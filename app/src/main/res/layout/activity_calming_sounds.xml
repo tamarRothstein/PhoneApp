@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
-        android:paddingBottom="40dp">
+        android:paddingBottom="80dp"> <!-- משאיר מקום לכפתורים בתחתית -->
 
         <!-- Back Button -->
         <ImageButton
@@ -35,15 +35,6 @@
             android:textAlignment="center"
             android:layout_marginBottom="8dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose peaceful sounds to help you relax"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:textAlignment="center"
-            android:layout_marginBottom="24dp" />
-
         <!-- Current Playing Status -->
         <TextView
             android:id="@+id/txtCurrentSound"
@@ -57,259 +48,191 @@
             android:padding="12dp"
             android:background="@color/background_card" />
 
-        <!-- Row 1 -->
+        <!-- Sound Grid (2 rows of 3 buttons each) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
+            android:orientation="vertical">
 
-            <!-- Ocean Waves Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
+            <!-- Row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
 
-                <LinearLayout
-                    android:id="@+id/btnOceanWaves"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ocean Waves"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/button_primary"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/btnOceanWaves"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Gentle waves washing on the shore"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ocean Waves"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/button_primary" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!-- Rain Forest Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
+
+                    <LinearLayout
+                        android:id="@+id/btnRainForest"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rain Forest"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_sage" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
+
+                    <LinearLayout
+                        android:id="@+id/btnBirdsSinging"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Birds Singing"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/status_calm" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/btnRainForest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rain Forest"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary_sage"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/btnGentleRain"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tropical forest sounds with distant rain"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gentle Rain"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_turquoise" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!-- Birds Singing Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
 
-                <LinearLayout
-                    android:id="@+id/btnBirdsSinging"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Birds Singing"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/status_calm"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/btnMountainStream"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Peaceful morning birds chirping"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mountain Stream"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/status_alert" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card">
+
+                    <LinearLayout
+                        android:id="@+id/btnWindTrees"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="?attr/selectableItemBackground">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wind in Trees"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_dark" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Row 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
-
-            <!-- Gentle Rain Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
-
-                <LinearLayout
-                    android:id="@+id/btnGentleRain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gentle Rain"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary_turquoise"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Soft raindrops on leaves and ground"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Mountain Stream Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
-
-                <LinearLayout
-                    android:id="@+id/btnMountainStream"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mountain Stream"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/status_alert"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Clear water flowing over rocks"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Wind in Trees Option -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/background_card">
-
-                <LinearLayout
-                    android:id="@+id/btnWindTrees"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wind in Trees"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary_dark"
-                        android:layout_marginBottom="6dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Gentle breeze rustling through leaves"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:textAlignment="center" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <!-- Control Buttons -->
+        <!-- Bottom Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -317,27 +240,25 @@
             android:gravity="center"
             android:layout_marginTop="24dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/startButton"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
-                android:text="Start"
+                android:text="Play"
                 android:textSize="16sp"
-                android:backgroundTint="@color/primary_dark"
-                android:textColor="@color/text_white"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="16dp"
+                app:backgroundTint="@color/button_primary"
+                android:textColor="@color/text_white" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/doneButton"
+                style="@style/SecondaryButtonStyle"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:text="Done"
-                android:textSize="16sp"
-                android:backgroundTint="@color/primary_dark"
-                android:textColor="@color/text_white" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
     </LinearLayout>
-
 </ScrollView>

@@ -60,19 +60,18 @@
         <activity
             android:name=".ui.alert.AlertActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
+            android:theme="@style/Theme.MyPhoneApp.NoActionBar"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true"
+            android:taskAffinity="" />
+
         <activity
-            android:name=".ui.alert.WellnessOptionsActivity"
+            android:name=".ui.wellness.WellnessFragment"
             android:exported="false"
             android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
 
         <!-- Wellness Activities -->
         <activity android:name=".ui.activities.BreathingActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-        <activity android:name=".ui.activities.MeditationActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-        <activity android:name=".ui.activities.CountingActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-        <activity android:name=".ui.activities.GuidedImageryActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-        <activity android:name=".ui.activities.HeartbeatActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-        <activity android:name=".ui.activities.HydrationActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
         <activity android:name=".ui.activities.CalmingSoundsActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
         <activity android:name=".ui.activities.ShakeOutActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
         <activity android:name=".ui.activities.VoiceGuidanceActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
