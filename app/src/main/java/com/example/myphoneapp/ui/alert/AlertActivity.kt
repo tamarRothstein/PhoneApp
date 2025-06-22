@@ -2,9 +2,11 @@ package com.example.myphoneapp.ui.alert
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myphoneapp.databinding.ActivityAlertBinding
 import com.example.myphoneapp.MainActivity
+import kotlin.system.exitProcess
 
 class AlertActivity : AppCompatActivity() {
 
@@ -33,18 +35,28 @@ class AlertActivity : AppCompatActivity() {
             if (isThankYouState) {
                 finish()
             } else {
-                // Navigate to MainActivity and request wellness tab
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("navigate_to", "wellness")
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                // ✅ כן - עבור ישר ל-Wellness
+                Log.d("ALERT_ACTIVITY", "User clicked Yes - navigating to Wellness")
+
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    putExtra("navigate_to", "wellness")
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
                 startActivity(intent)
                 finish()
             }
         }
 
         binding.btnNo.setOnClickListener {
+            Log.d("ALERT_ACTIVITY", "User clicked No - closing alert")
+            finish()
+        }
+
+        binding.btnNo.setOnClickListener {
             if (isThankYouState) {
-                finish()
+                // ✅ סגירת האפליקציה לגמרי
+                finishAffinity()
+                exitProcess(0)
             } else {
                 showThankYouMessage()
             }
@@ -55,7 +67,7 @@ class AlertActivity : AppCompatActivity() {
         isThankYouState = true
         binding.alertMessage.text = "Okay, no problem! Have a great day! 😊\n\nRemember, I'm here whenever you need support."
         binding.btnYes.text = "Thanks"
-        binding.btnNo.text = "Close"
+        binding.btnNo.text = "Close App"
     }
 
     override fun onBackPressed() {

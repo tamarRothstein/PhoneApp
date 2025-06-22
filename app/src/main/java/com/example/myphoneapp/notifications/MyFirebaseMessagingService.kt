@@ -3,14 +3,11 @@ package com.example.myphoneapp.notifications
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.myphoneapp.R
-import com.example.myphoneapp.MainActivity
+import com.example.myphoneapp.ui.alert.AlertActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -19,59 +16,73 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        val data = remoteMessage.data
+        Log.d("FCM", "Message received from: ${remoteMessage.from}")
 
-        val heartRate = data["heart_rate"]?.toIntOrNull()
-        val hrv = data["hrv"]?.toDoubleOrNull()
-        val stressLevel = data["stress_level"]
-        val rageScore = data["rage_score"]?.toDoubleOrNull()
-        val timestamp = data["timestamp"]?.toLongOrNull()
-        val deviceId = data["device_id"]
+        // בדיקה אם יש data בלבד
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d("FCM", "Data payload: ${remoteMessage.data}")
 
-        Log.d("FCM", "Message received: $data")
+            val alertMessage = remoteMessage.data["alert_message"] ?: "You received a new alert"
+            val intent = Intent(this, AlertActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra("ALERT_MESSAGE", alertMessage)
+                putExtra("from_firebase_alert", true)
+            }
 
-        if (heartRate != null && heartRate > 120) {
-            val alertMessage = "High heart rate detected: $heartRate bpm"
-            showNotification(alertMessage)
+            // הצגת פופ-אפ (לא notification bar)
+            startActivity(intent)
+
+            // סימון ב־SharedPreferences למקרה של פתיחה מה-Launcher
+            val prefs = getSharedPreferences("wellness_prefs", MODE_PRIVATE)
+            prefs.edit().putBoolean("should_show_alert", true).apply()
+
+        } else {
+            Log.w("FCM", "Received message with no data payload")
         }
     }
 
-    private fun showNotification(message: String) {
-        val channelId = "alert_channel"
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("navigate_to_dashboard", true)
+    private fun showNotificationToAlert() {
+        val intent = Intent(this, AlertActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("ALERT_MESSAGE", "Hey, what's up? Would you like to try some relaxation together?")
+            putExtra("from_firebase_alert", true)
         }
 
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
+            this,
+            0,
+            intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channelId = "wellness_alerts"
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        // יצירת ערוץ התראות (נדרש מ־Android 8 ומעלה)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Alerts",
+                "Wellness Alerts",
                 NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Notifications for abnormal readings"
-                enableLights(true)
-                lightColor = Color.RED
-            }
+            )
             notificationManager.createNotificationChannel(channel)
         }
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_dashboard)
-            .setContentTitle("Wellness Alert")
-            .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSmallIcon(R.drawable.ic_dashboard) // 🎨 שימי לב: ודאי שיש לך אייקון כזה
+            .setContentTitle("Relaxation Reminder")
+            .setContentText("Tap to take a breath together.")
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
 
         notificationManager.notify(0, notification)
+    }
+
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+        Log.d("FCM", "New token: $token")
     }
 }

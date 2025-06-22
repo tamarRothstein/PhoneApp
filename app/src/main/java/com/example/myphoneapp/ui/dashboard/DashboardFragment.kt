@@ -60,11 +60,20 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupUI() {
+        val initialHeartRate = 83
+
         binding.apply {
-            heartRateValue.text = getString(R.string.heart_rate_default)
-            stressLevelValue.text = getString(R.string.stress_level_low)
+            heartRateValue.text = initialHeartRate.toString()
+
+            val (stressLevel, statusMessage) = when {
+                initialHeartRate < 60 -> "Low" to "You're calm and relaxed"
+                initialHeartRate in 60..90 -> "Medium" to "You're doing fine"
+                else -> "High" to "Take a deep breath and rest"
+            }
+
+            stressLevelValue.text = stressLevel
+            currentStatusText.text = statusMessage
             stepsValue.text = getString(R.string.steps_default)
-            currentStatusText.text = getString(R.string.status_great_today)
 
             btnStartVoiceGuidance.setOnClickListener {
                 val intent = Intent(requireContext(), VoiceGuidanceActivity::class.java)

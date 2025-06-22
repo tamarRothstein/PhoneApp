@@ -15,6 +15,8 @@ import com.example.myphoneapp.ui.alert.AlertActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.myphoneapp.ui.dashboard.DashboardFragment
+import androidx.navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,20 +28,47 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ בדיקה בטוחה של ALERT_MESSAGE עם לוג
+        // בדיקה של פרמטרים מיוחדים
         val extras = intent.extras
         val alertMessage = extras?.getString("ALERT_MESSAGE")
         val hasAlert = extras?.containsKey("ALERT_MESSAGE") == true
+        val navigateToDashboard = intent.getBooleanExtra("navigate_to_dashboard", false)
+        val fromNotification = intent.getBooleanExtra("from_notification", false)
+        val fromFirebaseAlert = intent.getBooleanExtra("from_firebase_alert", false)
 
-        Log.d("CHECK_INTENT", "ALERT_MESSAGE = $alertMessage | hasAlert=$hasAlert")
+        Log.d("CHECK_INTENT", "ALERT_MESSAGE = $alertMessage | hasAlert=$hasAlert | navigateToDashboard=$navigateToDashboard | fromFirebaseAlert=$fromFirebaseAlert")
 
-        if (hasAlert && !alertMessage.isNullOrBlank() && alertMessage != "null") {
-            launchAlertActivity(alertMessage)
+        // ✅ אם זה פוש מ־Firebase עם alert – נפתח ישר את AlertActivity
+        if (hasAlert && !alertMessage.isNullOrBlank() && alertMessage != "null" && fromFirebaseAlert && intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY == 0) {
+            val alertIntent = Intent(this, AlertActivity::class.java)
+            alertIntent.putExtra("ALERT_MESSAGE", alertMessage)
+            alertIntent.putExtra("from_firebase_alert", true)
+            alertIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(alertIntent)
             finish()
             return
         }
 
-        // המשך רגיל לדשבורד
+        // ✅ אם יש דגל בשמירה מקומית (SharedPreferences)
+        val prefs = getSharedPreferences("wellness_prefs", MODE_PRIVATE)
+        val shouldShowAlertFromFirebase = prefs.getBoolean("should_show_alert", false)
+
+        if (shouldShowAlertFromFirebase && !hasAlert && !navigateToDashboard && !fromNotification) {
+            Log.d("CHECK_INTENT", "🏏 Detected notification click via SharedPreferences - opening AlertActivity")
+
+            // נקה את הדגל
+            prefs.edit().putBoolean("should_show_alert", false).apply()
+
+            val alertIntent = Intent(this, AlertActivity::class.java)
+            alertIntent.putExtra("ALERT_MESSAGE", "Hey, what's up? Would you like to try some relaxation together?")
+            alertIntent.putExtra("from_firebase_alert", true)
+            alertIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(alertIntent)
+            finish()
+            return
+        }
+
+        // ✅ אם לא – המשך רגיל לדשבורד
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -56,14 +85,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("FCM", "FCM Token: $token")
         }
 
-        viewModel.startHealthMonitoring("user_123")
-
+        // ✅ אם יש בקשה לעבור ל־Wellness Fragment
         val target = intent.getStringExtra("navigate_to")
         if (target == "wellness") {
-            val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-            bottomNavigation.selectedItemId = R.id.wellnessFragment
+            binding.root.post {
+                val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                bottomNavigation.selectedItemId = R.id.wellnessFragment
+            }
         }
-
     }
 
     private fun setupNavigation() {
@@ -107,7 +136,8 @@ class MainActivity : AppCompatActivity() {
                     "emergency", "alert", "stressed" -> {
                         speakCalmingMessage()
                         val msg = response.alertMessage ?: "Take a deep breath!"
-                        launchAlertActivity(msg)
+                        // השבתנו זמנית כי זה גרם לבעיה
+                        // launchAlertActivity(msg)
                     }
                 }
             }
