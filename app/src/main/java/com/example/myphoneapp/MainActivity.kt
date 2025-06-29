@@ -15,8 +15,6 @@ import com.example.myphoneapp.ui.alert.AlertActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.example.myphoneapp.ui.dashboard.DashboardFragment
-import androidx.navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
 

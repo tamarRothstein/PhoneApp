@@ -18,23 +18,35 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         Log.d("FCM", "Message received from: ${remoteMessage.from}")
 
-        // בדיקה אם יש data בלבד
         if (remoteMessage.data.isNotEmpty()) {
             Log.d("FCM", "Data payload: ${remoteMessage.data}")
 
             val alertMessage = remoteMessage.data["alert_message"] ?: "You received a new alert"
+            val heartRate = remoteMessage.data["heartRate"]?.toIntOrNull()
+            val stressLevel = remoteMessage.data["stressLevel"]
+            val steps = remoteMessage.data["steps"]
+
+            // נשמור הכל ב-SharedPreferences
+            val prefs = getSharedPreferences("wellness_prefs", MODE_PRIVATE)
+            val editor = prefs.edit()
+
+            editor.putBoolean("should_show_alert", true)
+            editor.putString("last_alert_message", alertMessage)
+
+            heartRate?.let { editor.putInt("heartRate", it) }
+            stressLevel?.let { editor.putString("stressLevel", it) }
+            steps?.let { editor.putString("steps", it) }
+
+            editor.apply()
+
+            // הצגת פופ-אפ מידי
             val intent = Intent(this, AlertActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 putExtra("ALERT_MESSAGE", alertMessage)
                 putExtra("from_firebase_alert", true)
             }
 
-            // הצגת פופ-אפ (לא notification bar)
             startActivity(intent)
-
-            // סימון ב־SharedPreferences למקרה של פתיחה מה-Launcher
-            val prefs = getSharedPreferences("wellness_prefs", MODE_PRIVATE)
-            prefs.edit().putBoolean("should_show_alert", true).apply()
 
         } else {
             Log.w("FCM", "Received message with no data payload")

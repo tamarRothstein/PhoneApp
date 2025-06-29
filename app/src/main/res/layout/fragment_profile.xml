@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_off_white"
@@ -10,22 +11,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header -->
-        <TextView
+        <!-- Header with Settings -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Profile"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="24dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My Profile"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <Button
+                android:id="@+id/settingsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚙️"
+                android:background="@android:color/transparent"
+                android:textSize="24sp"/>
+        </LinearLayout>
 
         <!-- Profile Completeness -->
         <TextView
             android:id="@+id/profileCompletenessText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile Completeness: 60%"
+            android:text="Profile Completeness: 0%"
             android:textSize="16sp"
             android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
@@ -35,358 +52,148 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="8dp"
-            android:progress="60"
             android:max="100"
             android:layout_marginBottom="24dp" />
 
-        <!-- Basic Information -->
-        <TextView
+        <!-- Basic Information Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Basic Information"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Name -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Full Name"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/nameEdit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Enter your name"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Email -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email Address"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/emailEdit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Enter your email"
-            android:inputType="textEmailAddress"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Phone -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Phone Number"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/phoneEdit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Enter your phone"
-            android:inputType="phone"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Birthdate -->
-        <LinearLayout
-            android:id="@+id/birthdateCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Date of Birth"
-                android:textSize="16sp"
-                android:textColor="@color/text_primary" />
-
-            <TextView
-                android:id="@+id/birthdateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Not set"
-                android:textSize="16sp"
-                android:textColor="@color/text_secondary" />
-
-        </LinearLayout>
-
-        <!-- Gender -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gender"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <Spinner
-            android:id="@+id/genderSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Medical Information -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Medical Information"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Medical Conditions -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Medical Conditions"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/medicalConditionsEdit"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:hint="Any medical conditions..."
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Medications -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Current Medications"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/medicationsEdit"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:hint="Current medications..."
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Allergies -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Allergies"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/allergiesEdit"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:hint="Any allergies..."
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:textSize="16sp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Emergency Contacts -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Emergency Contacts"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Emergency Contact -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Primary Emergency Contact"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/emergencyContactEdit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Contact name and phone"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Doctor -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Primary Doctor/Clinic"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/doctorEdit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Doctor name and contact"
-            android:textSize="16sp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Height and Weight -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Physical Information"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:layout_marginEnd="8dp">
+                android:padding="16dp">
 
-                <TextView
+                <EditText
+                    android:id="@+id/nameEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Height (cm)"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:layout_marginBottom="4dp" />
+                    android:hint="Full Name"
+                    android:layout_marginBottom="12dp" />
+
+                <EditText
+                    android:id="@+id/emailEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Address"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginBottom="12dp" />
+
+                <EditText
+                    android:id="@+id/phoneEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:id="@+id/birthdateCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:background="@color/background_card"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date of Birth" />
+
+                    <TextView
+                        android:id="@+id/birthdateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not set" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Medical Info Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/medicalConditionsEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Medical Conditions"
+                    android:layout_marginBottom="12dp"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/medicationsEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Current Medications"
+                    android:layout_marginBottom="12dp"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/allergiesEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Allergies"
+                    android:layout_marginBottom="12dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Physical Measurements Card -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
                 <EditText
                     android:id="@+id/heightEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="170"
-                    android:inputType="number"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Weight (kg)"
-                    android:textSize="14sp"
-                    android:textColor="@color/text_secondary"
-                    android:layout_marginBottom="4dp" />
+                    android:layout_weight="1"
+                    android:hint="Height (cm)"
+                    android:layout_marginEnd="8dp"/>
 
                 <EditText
                     android:id="@+id/weightEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="70"
-                    android:inputType="numberDecimal"
-                    android:textSize="16sp" />
-
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Weight (kg)"
+                    android:layout_marginStart="8dp"/>
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-
-        <!-- Activity History Button -->
-        <Button
-            android:id="@+id/viewActivityHistoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="View Activity History"
-            android:textSize="16sp"
-            android:backgroundTint="@color/primary_turquoise"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Settings Buttons -->
-        <Button
-            android:id="@+id/notificationSettingsButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Notification Settings"
-            android:textSize="16sp"
-            android:backgroundTint="@color/button_secondary"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/privacySettingsButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Privacy and Security"
-            android:textSize="16sp"
-            android:backgroundTint="@color/button_secondary"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/exportDataButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Export My Data"
-            android:textSize="16sp"
-            android:backgroundTint="@color/status_calm"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Action Buttons -->
-        <Button
+        <!-- Save Profile Button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/saveProfileButton"
+            style="@style/PrimaryButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Save Profile"
-            android:textSize="18sp"
-            android:backgroundTint="@color/button_primary"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="12dp" />
-
-        <Button
-            android:id="@+id/signOutButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Sign Out"
-            android:textSize="16sp"
-            android:backgroundTint="@color/status_emergency"
-            android:textColor="@color/text_white"
-            android:layout_marginBottom="40dp" />
-
+            android:layout_height="wrap_content"
+            android:text="Save Profile"/>
     </LinearLayout>
-
 </ScrollView>
