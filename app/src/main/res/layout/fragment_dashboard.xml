@@ -69,15 +69,15 @@
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:gravity="center">
 
                     <TextView
@@ -108,15 +108,15 @@
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:gravity="center">
 
                     <TextView
@@ -136,10 +136,9 @@
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
 
-        <!-- Steps Card -->
+        <!-- Rage Score & HRV -->
         <com.google.android.material.card.MaterialCardView
             style="@style/CardStyle"
             android:layout_width="match_parent"
@@ -151,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp"
-                android:gravity="center_vertical">
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -163,26 +162,30 @@
                         style="@style/CaptionTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Steps Today"
-                        android:layout_marginBottom="4dp" />
+                        android:text="Rage Score" />
 
                     <TextView
-                        android:id="@+id/steps_value"
-                        style="@style/SubHeaderTextStyle"
+                        android:id="@+id/rage_score_value"
+                        style="@style/BodyTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="--"
-                        android:textColor="@color/primary_turquoise" />
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        style="@style/CaptionTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HRV" />
+
+                    <TextView
+                        android:id="@+id/hrv_value"
+                        style="@style/BodyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--" />
 
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_steps"
-                    android:contentDescription="Steps icon"
-                    app:tint="@color/primary_turquoise" />
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -200,7 +203,6 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <!-- Voice Guidance Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_start_voice_guidance"
                 style="@style/PrimaryButtonStyle"
@@ -208,10 +210,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Start Voice Guidance"
+                android:minHeight="72dp"
+                android:gravity="center"
+                android:text="Start\nGuidance"
+                android:textAlignment="center"
                 android:drawableTop="@drawable/ic_breathing" />
 
-            <!-- Breathing Exercise Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_start_breathing"
                 style="@style/PrimaryButtonStyle"
@@ -219,7 +223,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Start Breathing\n"
+                android:minHeight="72dp"
+                android:gravity="center"
+                android:text="Start\nBreathing"
+                android:textAlignment="center"
                 android:drawableTop="@drawable/ic_breathing" />
 
         </LinearLayout>

@@ -39,24 +39,24 @@
             </intent-filter>
         </service>
 
-        <!-- Main Launcher -->
+        <!-- Splash Activity becomes the launcher -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.MyPhoneApp">
+            android:theme="@style/Theme.MyPhoneApp.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Splash Activity -->
+        <!-- Main Activity -->
         <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.Splash" />
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyPhoneApp" />
 
-        <!-- Alert Activities -->
+        <!-- Other Activities -->
         <activity
             android:name=".ui.alert.AlertActivity"
             android:exported="false"
@@ -65,12 +65,6 @@
             android:excludeFromRecents="true"
             android:taskAffinity="" />
 
-        <activity
-            android:name=".ui.wellness.WellnessFragment"
-            android:exported="false"
-            android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
-
-        <!-- Wellness Activities -->
         <activity android:name=".ui.activities.BreathingActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
         <activity android:name=".ui.activities.CalmingSoundsActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />
         <activity android:name=".ui.activities.ShakeOutActivity" android:exported="false" android:theme="@style/Theme.MyPhoneApp.NoActionBar" />

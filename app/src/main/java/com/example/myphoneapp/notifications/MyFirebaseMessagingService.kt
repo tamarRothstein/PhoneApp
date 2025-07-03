@@ -21,76 +21,71 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.d("FCM", "Data payload: ${remoteMessage.data}")
 
-            val alertMessage = remoteMessage.data["alert_message"] ?: "You received a new alert"
-            val heartRate = remoteMessage.data["heartRate"]?.toIntOrNull()
-            val stressLevel = remoteMessage.data["stressLevel"]
-            val steps = remoteMessage.data["steps"]
-
-            // נשמור הכל ב-SharedPreferences
             val prefs = getSharedPreferences("wellness_prefs", MODE_PRIVATE)
             val editor = prefs.edit()
 
-            editor.putBoolean("should_show_alert", true)
-            editor.putString("last_alert_message", alertMessage)
+            val heartRate = remoteMessage.data["heart_rate"]?.toIntOrNull() ?: -1
+            val stressLevel = remoteMessage.data["stress_level"]
+            val rageScore = remoteMessage.data["rage_score"]?.toFloatOrNull()
+            val hrv = remoteMessage.data["hrv"]?.toFloatOrNull()
+            val deviceId = remoteMessage.data["device_id"]
+            val timestamp = remoteMessage.data["timestamp"]?.toLongOrNull()
+            val alert = remoteMessage.data["alert"]
 
-            heartRate?.let { editor.putInt("heartRate", it) }
+            Log.d("FCM_DEBUG", "Going to save: heartRate=$heartRate, stressLevel=$stressLevel, rageScore=$rageScore, hrv=$hrv, deviceId=$deviceId, timestamp=$timestamp")
+
+            editor.putBoolean("should_show_alert", false)
+            if (heartRate >= 0) editor.putInt("heartRate", heartRate)
             stressLevel?.let { editor.putString("stressLevel", it) }
-            steps?.let { editor.putString("steps", it) }
-
+            rageScore?.let { editor.putFloat("rageScore", it) }
+            hrv?.let { editor.putFloat("hrv", it) }
+            deviceId?.let { editor.putString("deviceId", it) }
+            timestamp?.let { editor.putLong("timestamp", it) }
             editor.apply()
 
-            // הצגת פופ-אפ מידי
-            val intent = Intent(this, AlertActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                putExtra("ALERT_MESSAGE", alertMessage)
-                putExtra("from_firebase_alert", true)
+            // אם יש מפתח "alert" ב-Firebase - נציג נוטיפיקציה עם הודעה קבועה
+            if (!alert.isNullOrEmpty()) {
+                showNotification()
             }
-
-            startActivity(intent)
-
         } else {
             Log.w("FCM", "Received message with no data payload")
         }
     }
 
-    private fun showNotificationToAlert() {
-        val intent = Intent(this, AlertActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_SINGLE_TOP
-            putExtra("ALERT_MESSAGE", "Hey, what's up? Would you like to try some relaxation together?")
-            putExtra("from_firebase_alert", true)
-        }
-
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val channelId = "wellness_alerts"
+    private fun showNotification() {
+        val channelId = "default_channel_id"
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        // יצירת ערוץ התראות (נדרש מ־Android 8 ומעלה)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Wellness Alerts",
-                NotificationManager.IMPORTANCE_HIGH
+                "Default Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationManager.createNotificationChannel(channel)
         }
 
+        val title = "Relaxation Alert"
+        val message = "Take a moment to breathe and calm yourself."
+
+        val intent = Intent(this, AlertActivity::class.java).apply {
+            putExtra("ALERT_MESSAGE", message)
+            putExtra("from_firebase_alert", true)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_dashboard) // 🎨 שימי לב: ודאי שיש לך אייקון כזה
-            .setContentTitle("Relaxation Reminder")
-            .setContentText("Tap to take a breath together.")
-            .setAutoCancel(true)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
             .build()
 
-        notificationManager.notify(0, notification)
+        notificationManager.notify(1, notification)
     }
 
     override fun onNewToken(token: String) {

@@ -26,6 +26,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // אתחול מיידי של currentLocale כדי להבטיח שלא יתרסק
+        currentLocale = when (Locale.getDefault().language) {
+            "he" -> Locale("he", "IL")
+            "ru" -> Locale("ru", "RU")
+            else -> Locale.US
+        }
+
         // בדיקה של פרמטרים מיוחדים
         val extras = intent.extras
         val alertMessage = extras?.getString("ALERT_MESSAGE")
@@ -54,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         if (shouldShowAlertFromFirebase && !hasAlert && !navigateToDashboard && !fromNotification) {
             Log.d("CHECK_INTENT", "🏏 Detected notification click via SharedPreferences - opening AlertActivity")
 
-            // נקה את הדגל
             prefs.edit().putBoolean("should_show_alert", false).apply()
 
             val alertIntent = Intent(this, AlertActivity::class.java)
@@ -66,7 +72,14 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // ✅ אם לא – המשך רגיל לדשבורד
+        // ✅ אם צריך לדבר בקול
+        val shouldSpeak = prefs.getBoolean("should_speak", false)
+        if (shouldSpeak) {
+            speakCalmingMessage()
+            prefs.edit().putBoolean("should_speak", false).apply()
+        }
+
+        // ✅ אם לא – ממשיך רגיל לדשבורד
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -150,6 +163,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, AlertActivity::class.java)
         intent.putExtra("ALERT_MESSAGE", message)
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("DEBUG_MAIN", "MainActivity is alive in onResume!")
     }
 
     override fun onDestroy() {

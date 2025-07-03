@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,33 +66,16 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupUI() {
-        val prefs = requireContext().getSharedPreferences("wellness_prefs", Context.MODE_PRIVATE)
-        val heartRate = prefs.getInt("heartRate", 83)
-        val stressLevelPref = prefs.getString("stressLevel", null)
-        val steps = prefs.getString("steps", getString(R.string.steps_default))
+        updateDashboardData()
 
-        binding.apply {
-            heartRateValue.text = heartRate.toString()
+        binding.btnStartVoiceGuidance.setOnClickListener {
+            val intent = Intent(requireContext(), VoiceGuidanceActivity::class.java)
+            startActivity(intent)
+        }
 
-            val (stressLevel, statusMessage) = when {
-                heartRate < 60 -> "Low" to "You're calm and relaxed"
-                heartRate in 60..90 -> "Medium" to "You're doing fine"
-                else -> "High" to "Take a deep breath and rest"
-            }
-
-            stressLevelValue.text = stressLevelPref ?: stressLevel
-            currentStatusText.text = statusMessage
-            stepsValue.text = steps
-
-            btnStartVoiceGuidance.setOnClickListener {
-                val intent = Intent(requireContext(), VoiceGuidanceActivity::class.java)
-                startActivity(intent)
-            }
-
-            btnStartBreathing.setOnClickListener {
-                val intent = Intent(requireContext(), BreathingActivity::class.java)
-                startActivity(intent)
-            }
+        binding.btnStartBreathing.setOnClickListener {
+            val intent = Intent(requireContext(), BreathingActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -103,7 +87,7 @@ class DashboardFragment : Fragment() {
         if (shouldShow) {
             AlertDialog.Builder(requireContext())
                 .setTitle("Wellness Alert")
-                .setMessage(alertMessage)
+                .setMessage(alertMessage ?: "Take a deep breath")
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                 }
@@ -123,23 +107,34 @@ class DashboardFragment : Fragment() {
     }
 
     private fun updateDashboardData() {
-        val prefs = requireContext().getSharedPreferences("wellness_prefs", Context.MODE_PRIVATE)
-        val heartRate = prefs.getInt("heartRate", 83)
-        val stressLevelPref = prefs.getString("stressLevel", null)
-        val steps = prefs.getString("steps", getString(R.string.steps_default))
+        try {
+            val prefs = requireContext().getSharedPreferences("wellness_prefs", Context.MODE_PRIVATE)
+            val heartRate = prefs.getInt("heartRate", 83)
+            val stressLevelPref = prefs.getString("stressLevel", "Unknown")
+            val rageScore = prefs.getFloat("rageScore", -1f)
+            val hrv = prefs.getFloat("hrv", -1f)
 
-        binding.apply {
-            heartRateValue.text = heartRate.toString()
+            Log.d("DASHBOARD_CHECK", "heartRate=$heartRate, stressLevel=$stressLevelPref, rageScore=$rageScore, hrv=$hrv")
 
-            val (stressLevel, statusMessage) = when {
-                heartRate < 60 -> "Low" to "You're calm and relaxed"
-                heartRate in 60..90 -> "Medium" to "You're doing fine"
-                else -> "High" to "Take a deep breath and rest"
+            binding.apply {
+                heartRateValue.text = if (heartRate >= 0) "$heartRate bpm" else "--"
+                stressLevelValue.text = stressLevelPref ?: "Unknown"
+                currentStatusText.text = when (stressLevelPref?.lowercase()) {
+                    "low" -> "You're calm and relaxed"
+                    "medium" -> "You're doing fine"
+                    "high" -> "Take a deep breath and rest"
+                    else -> "Monitoring your wellness..."
+                }
+
+                rageScoreValue.text = if (rageScore >= 0) rageScore.toString() else "--"
+                hrvValue.text = if (hrv >= 0) hrv.toString() else "--"
+
+                // מחקנו את:
+                // deviceIdValue.text = ...
+                // timestampValue.text = ...
             }
-
-            stressLevelValue.text = stressLevelPref ?: stressLevel
-            currentStatusText.text = statusMessage
-            stepsValue.text = steps
+        } catch (e: Exception) {
+            Log.e("DASHBOARD_CRASH", "updateDashboardData crashed: ${e.message}", e)
         }
     }
 
